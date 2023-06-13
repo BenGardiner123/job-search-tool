@@ -1,5 +1,5 @@
 # job-search-tool
-![image](https://github.com/BenGardiner123/job-search-tool/assets/61527372/82d0defd-a5f8-4e2c-81e0-fc2cac855da3)
+![github job search](https://github.com/BenGardiner123/job-search-tool/assets/61527372/c6c3f61e-bf34-4d61-88f4-56150c1b9fed)
 
 Job-Search-Tool is a powerful tool that streamlines your job search process by leveraging web scraping, Node.js, and MongoDB. With this tool, you can extract job listings from various websites, store them in a database, perform advanced queries, and even receive email notifications for new job postings. Whether you're a job seeker or a developer interested in building a similar tool, Job-Search Helper provides a comprehensive guide and codebase to help you enhance your job search experience.
 
