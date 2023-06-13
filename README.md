@@ -17,7 +17,7 @@ Job-Search-Tool is a powerful tool that streamlines your job search process by l
 
 ## Introduction
 
-Welcome to the Job-Search Helper repository! This project aims to revolutionize the way you search for job opportunities by automating the process and providing a user-friendly interface. In this repository, you'll find a step-by-step guide and code samples to help you create your own job-search helper. Whether you're a job seeker looking to simplify your job search or a developer interested in learning new technologies, this project is for you.
+Welcome to the Job-Search Helper repository! This project is the result of my 3 part series of posts on hashnode at https://bengardiner.hashnode.dev/. In this repository, you'll find a step-by-step guide and code samples to help you create your own job-search helper. Whether you're a job seeker looking to simplify your job search or a developer interested in learning new technologies, this project is for you.
 
 Throughout the implementation, we'll cover the fundamentals of web scraping using Puppeteer, explore the capabilities of Node.js and Mongoose for database management, and dive into advanced features like query optimization and email notifications for new job postings. The repository is structured into multiple parts, each corresponding to a blog post that explains the concepts and provides detailed instructions.
 
