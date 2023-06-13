@@ -1,0 +1,19 @@
+{
+  "name": "job-search-tool",
+  "version": "1.0.0",
+  "description": "an automated scraper",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.1.4",
+    "mongoose": "^7.2.3",
+    "nodemailer": "^6.9.3",
+    "puppeteer": "^20.5.0"
+  }
+}
