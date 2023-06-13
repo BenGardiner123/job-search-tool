@@ -2,6 +2,9 @@
 
 Job-Search-Tool is a powerful tool that streamlines your job search process by leveraging web scraping, Node.js, and MongoDB. With this tool, you can extract job listings from various websites, store them in a database, perform advanced queries, and even receive email notifications for new job postings. Whether you're a job seeker or a developer interested in building a similar tool, Job-Search Helper provides a comprehensive guide and codebase to help you enhance your job search experience.
 
+*Note: Web scraping may have legal and ethical implications. Make sure to familiarize yourself with the terms of service and the website's scraping policy before scraping any website. Respect the website's guidelines and use web scraping responsibly.*
+
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -28,7 +31,7 @@ Throughout the implementation, we'll cover the fundamentals of web scraping usin
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/job-search-helper.git`
+1. Clone the repository: `git clone https://github.com/BenGardiner123/job-search-tool.git`
 2. Install the dependencies: `npm install`
 3. Set up your MongoDB connection by creating a `.env` file and adding your MongoDB URI.
 
@@ -50,4 +53,3 @@ This project is licensed under the MIT License. You are free to use, modify, and
 
 We hope this project helps you optimize your job search and simplifies the process of building similar tools. Happy job hunting!
 
-_This README template is inspired by the OpenAI GPT-3.5 Playground, tailored for the Job-Search Helper repository._
