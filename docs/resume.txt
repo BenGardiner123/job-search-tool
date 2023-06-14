@@ -1,0 +1,56 @@
+Miguel Sanchez
+123 Main Street
+Anytown, USA 12345
+(123) 456-7890
+migel@migel.com
+
+Objective:
+Highly motivated and enthusiastic web developer with 2 years of practical experience seeking a challenging position in a dynamic organization to further enhance my skills and contribute to the growth and success of the company.
+
+Education:
+Bachelor of Science in Computer Science
+XYZ University, Anytown, USA
+2019
+
+Skills:
+
+Proficient in HTML, CSS, and JavaScript
+Experience with front-end frameworks such as React.js and Angular
+Knowledge of back-end development using Node.js and Express
+Familiarity with database management systems like MySQL and MongoDB
+Understanding of version control systems like Git
+Strong problem-solving and analytical skills
+Excellent communication and teamwork abilities
+Adaptability and ability to learn quickly in fast-paced environments
+Experience:
+
+Web Developer
+ABC Company, Anytown, USA
+January 2021 - December 2022
+
+Developed responsive and user-friendly websites using HTML, CSS, and JavaScript.
+Collaborated with the design team to implement website layouts and interactive features.
+Implemented front-end frameworks, including React.js, to enhance user experience.
+Integrated back-end functionalities using Node.js and Express to create dynamic web applications.
+Worked with databases like MySQL and MongoDB to store and retrieve data efficiently.
+Ensured cross-browser compatibility and optimized website performance.
+Debugged and resolved issues, conducted testing, and implemented necessary improvements.
+Collaborated with team members on project planning and execution, meeting tight deadlines.
+Projects:
+
+E-commerce Website
+
+Created a fully functional e-commerce website using React.js and Node.js.
+Integrated a payment gateway for secure online transactions.
+Implemented features such as product listing, shopping cart, and user authentication.
+Portfolio Website
+
+Designed and developed a responsive portfolio website using HTML, CSS, and JavaScript.
+Showcased personal projects and skills in an aesthetically pleasing manner.
+Implemented smooth transitions and interactive elements for an engaging user experience.
+Certifications:
+
+Web Development Certification, XYZ Certification Authority, 2020
+JavaScript Fundamentals, ABC Online Learning Platform, 2021
+References:
+Available upon request

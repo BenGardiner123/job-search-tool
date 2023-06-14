@@ -4,7 +4,17 @@ import mongoose from "mongoose"; // Importing the Mongoose library for MongoDB
 import dotenv from "dotenv";
 import { Job } from "./models/job.js"; // Importing the Job model from the models module
 import { evaluate } from "./evaluate.js";
-import { sendEmail } from "./email.js";
+import { OpenAI } from "langchain/llms/openai";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { DocxLoader } from "langchain/document_loaders/fs/docx";
+import { TextLoader } from "langchain/document_loaders/fs/text";
+import { HNSWLib } from "langchain/vectorstores";
+import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
+import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { RetrievalQAChain } from "langchain/chains";
+import getSingleJobDetails from "./getSingleJobDetails.js";
+import sendEmail from "./email.js";
 
 dotenv.config(); // Configure dotenv to load the .env file
 const mongoUrl = process.env.MONGO_URI; // Setting the MongoDB connection URL from the environment variable we set in the .env file
@@ -196,9 +206,102 @@ async function insertJobs(jobPosts) {
   }
 }
 
-await runJobScrape();
+function normalizeDocuments(docs) {
+  return docs.map((doc) => {
+    if (typeof doc.pageContent === "string") {
+      return doc.pageContent;
+    } else if (Array.isArray(doc.pageContent)) {
+      return doc.pageContent.join("\n");
+    }
+  });
+}
+
+// await runJobScrape();
 
 const evaluationResults = await evaluate();
-// console.log("evaluate => evaluationResults: ", evaluationResults);
 
-await sendEmail(evaluationResults);
+// Using the  getSingleJobDetails go to the job url and scrape the full job description now that we know its worth our time
+let jobDetailsTextResult = [];
+// create a list of jobHrFeedbackResults to hold the results of the jobHrFeedback function
+const jobHrFeedbackResults = [];
+
+for (const job of evaluationResults) {
+  const jobObject = {
+    id: job._id,
+    details: "",
+    title: job.title,
+  };
+  const jobDetailsText = await getSingleJobDetails(job.url);
+  jobObject.details = jobDetailsText;
+  jobDetailsTextResult.push(jobObject);
+}
+
+// instantiate the OpenAI LLM that will be used to answer the question and pass your key as the apiKey from the .env file
+const model = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+// the directory loader will load all the documents in the docs folder with the correct extension as specified in the second argument
+// note this is not the only way to load documents check the docs for more info
+const directoryLoader = new DirectoryLoader("docs", {
+  ".pdf": (path) => new PDFLoader(path),
+  ".txt": (path) => new TextLoader(path),
+  ".docx": (path) => new DocxLoader(path),
+});
+
+// load the documents into the docs variable
+const docs = await directoryLoader.load();
+
+// verify the docs have been loaded correctly
+console.log({ docs });
+
+// Split text into chunks with any TextSplitter. You can then use it as context or save it to memory afterwards.
+const textSplitter = new RecursiveCharacterTextSplitter({
+  chunkSize: 1000,
+});
+
+//  normalize the documents to make sure they are all strings
+const normalizedDocs = normalizeDocuments(docs);
+
+// https://js.langchain.com/docs/modules/schema/document
+const splitDocs = await textSplitter.createDocuments(normalizedDocs);
+
+// now create the vector store from the splitDocs and the OpenAIEmbeddings so that we can use it to create the chain
+const vectorStore = await HNSWLib.fromDocuments(
+  splitDocs,
+  new OpenAIEmbeddings()
+);
+
+// https://js.langchain.com/docs/modules/chains/index_related_chains/retrieval_qa
+const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever());
+
+// loop through each job in the jobDetailsTextResult
+// ==> remember to change the name from Migel to your name otherwise it will look weird
+for (const job of jobDetailsTextResult) {
+  const question = `${job.details} is a job that Migel could apply for. 
+    Act like you a recruiter or HR manager and read each job description step by step. 
+    When matching up requirements with experience treat SQL Server and SQL as the same thing as well as .NET and .NET Core but mention if you are doing this so i can see. 
+    If the job is not suitable for Migel then say so in your recommendations.
+    then then tell me if Migel should apply for the job or not and give examples like this:
+
+    // below is the example of style of answer i want to see
+    "Migel should apply for this job because he has the required experience with React and Node. Although he does not fit all the experience requirements he has the required experience with React and Node. So it may be worth a try
+    He has not used Ionic before but he has used Typescript so he should be able to pick it up quickly."
+    // end of example
+    `;
+  const res = await chain.call({
+    input_documents: docs,
+    query: question,
+  });
+
+  let outputObject = {
+    id: job.id.toString(),
+    jobHrFeedback: res.text,
+  };
+
+  jobHrFeedbackResults.push(outputObject);
+}
+
+console.log("jobHrFeedbackResults", jobHrFeedbackResults);
+
+await sendEmail(evaluationResults, jobHrFeedbackResults);

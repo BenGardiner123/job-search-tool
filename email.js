@@ -1,6 +1,15 @@
 import nodemailer from "nodemailer";
 
-export const sendEmail = async (jobs) => {
+export const sendEmail = async (jobs, jobHrFeedbackResults) => {
+  const jobHrFeedbackResultsMapped = jobHrFeedbackResults.map(
+    (jobHrFeedbackResult) => {
+      return {
+        id: jobHrFeedbackResult.id,
+        feedback: jobHrFeedbackResult.jobHrFeedback,
+      };
+    }
+  );
+
   // Create a nodemailer transporter
   const transporter = nodemailer.createTransport({
     host: "smtp.office365.com",
@@ -56,6 +65,14 @@ export const sendEmail = async (jobs) => {
             <p><strong>Location:</strong> ${job.location}</p>
             <p class="job-details"><strong>Job Description:</strong></p>
             <p>${job.details}</p>
+            <p class="job-details"><strong>You HR Helper Feedback:</strong></p>
+            <p>"${
+              (
+                jobHrFeedbackResultsMapped.find(
+                  (f) => f.id.toString() === job.id.toString()
+                ) || {}
+              ).feedback || ""
+            }"</p>
             <p><strong>Link:</strong> <a class="job-link" href="${job.url}">${
           job.url
         }</a></p>
