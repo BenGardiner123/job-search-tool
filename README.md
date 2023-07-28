@@ -44,6 +44,10 @@ Throughout the implementation, we'll cover the fundamentals of web scraping usin
 4. Utilize the provided functions to query the database and retrieve relevant job listings.
 5. Customize the email notification feature to receive alerts for new job postings.
 
+## General Workflow
+![image](https://github.com/BenGardiner123/job-search-tool/assets/61527372/9e1ce4e8-dd39-48ce-af31-5c865fabec8c)
+
+
 ## Contributing
 
 Contributions are welcome! If you have any ideas, suggestions, or improvements, feel free to open an issue or submit a pull request. Please follow the repository's code of conduct.
